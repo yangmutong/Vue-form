@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>vue form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="full-screen" content="yes">
+  <meta name="x5-page-mode" content="app">
+  <meta name="author" content="yangmutong@gmail.com">
+  <link rel="stylesheet" href="lib/bootstrap-3.3.5/css/bootstrap.css">
+  <link rel="stylesheet" href="lib/bootstrap-3.3.5/css/bootstrap-theme.css">
+</head>
+<body>
+  <div id="app">
+    <validator name="validation1">
+      <form novalidate>
+
+        <!--Text-->
+        <fieldset class="form-group">
+          <label for="text" class="col-md-1 control-label">Text</label>
+          <div class="col-md-4">
+            <input class="form-control" type="text" name="text" id="text" v-model="text">
+          </div>
+          <span>text input {{text}}</span>
+        </fieldset>
+
+        <!--Password-->
+        <fieldset class="form-group">
+          <label for="text" class="col-md-1 control-label">Password</label>
+          <div class="col-md-4">
+            <input class="form-control password-control" type="password" name="password" id="password" v-model="password">
+          </div>
+          <span>password {{password}}</span>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label for="email" class="col-md-1 control-label">Email</label>
+          <div class="col-md-4">
+            <input class="form-control" type="email" name="email" id="email" v-model="email">
+          </div>
+          <span>email input {{email}}</span>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label for="number" class="col-md-1 control-label">number</label>
+          <div class="col-md-4">
+            <input class="form-control" type="number" name="number" id="number" v-model="number">
+          </div>
+          <span>number input {{number}}</span>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label for="dateInput" class="col-md-1 control-label">日期</label>
+          <div class="col-md-4">
+            <input class="form-control" v-model="date"  type="date" id="dateInput">
+          </div>
+          <div>date: {{date}}</div>
+        </fieldset>
+
+
+        <!--多选框选项-->
+        <fieldset class="form-group">
+          <label class="checkbox-inline" for="jack">
+            <input type="checkbox" id="jack" value="jack" v-model="checkedNames"> Jack
+          </label>
+          <label class="checkbox-inline" for="john">
+            <input type="checkbox" id="john" value="John" v-model="checkedNames"> John
+          </label>
+          <label class="checkbox-inline" for="mike">
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames"> Mike
+          </label>
+          <br>
+          <span>Checked names: {{ checkedNames | json }}</span>
+        </fieldset>
+
+
+        <!--单选框按钮-->
+        <fieldset class="form-group">
+          <label class="radio-inline" for="inlineRadio1">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" v-model="picked"> 1
+          </label>
+          <label class="radio-inline" for="inlineRadio2">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" v-model="picked"> 2
+          </label>
+          <label class="radio-inline" for="inlineRadio3">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" v-model="picked"> 3
+          </label>
+          <br>
+          <span>Picked: {{ picked }}</span>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label for="area">
+            TextArea:
+            <textarea id="area" class="form-control" rows="3" v-model="area">Textarea</textarea>
+          </label>
+          <div>textarea:{{area}}</div>
+        </fieldset>
+
+
+
+
+        <fieldset class="form-group" >
+          <select name="cars" class="form-control" v-model="selected"S>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+          <br>
+          <span>Selected: {{ selected }}</span>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <select v-model="mulSelected" multiple class="form-control">
+            <option selected>A</option>
+            <option>B</option>
+            <option>C</option>
+          </select>
+          <br>
+          <span>mulSelected: {{ mulSelected | json }}</span>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <input type="submit" class="btn btn-default" value="send" v-if="$validation1.valid">
+        </fieldset>
+      </form>
+
+    </validator>
+
+  </div>
+
+  <div id="combine">
+    <validator name="inputValidation">
+      <form novalidate>
+        <input-component :data="model">
+
+        </input-component>
+      </form>
+    </validator>
+  </div>
+  <!-- built files will be auto injected -->
+
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/bootstrap-3.3.5/js/bootstrap.js"></script>
+  <script src="lib/vue.js"></script>
+  <script src="lib/vue-resource.js"></script>
+  <script src="lib/vue-router.js"></script>
+  <script src="lib/vue-validator.js"></script>
+  <script src="lib/vue-animated-list.js"></script>
+  <script src="lib/vue-element.js"></script>
+　<script>
+    var app = new Vue({
+      el: "#app",
+      data:{
+        picked: '',
+        checkedNames: [],
+        text:'',
+        area:'',
+        date:'',
+        selected:'',
+        mulSelected:[]
+      }
+    });
+
+    //for component
+    var inputComponent = Vue.extend({
+      props:['data'],
+      template:"<div>test {{data.id}}</div>"
+    });
+
+    Vue.component('input-component', inputComponent);
+
+    var combine = new Vue({
+      el: "#combine",
+      data:{
+        model:{
+          id: "text",
+          title: "text",
+          type: "text",
+          name: "text",
+          value: "text"
+        }
+      }
+    });
+  </script>
+</body>
+</html>
