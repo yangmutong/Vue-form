@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":[],"mappings":";;AAAA;;;;AACA;;;;AAEA;;;;;;;AAEA,kBAAQ;AACN,MAAI,MADE;AAEN,cAAY,EAAE,kBAAF;AAFN,CAAR","file":"main-compiled.js","sourcesContent":["import Vue from 'vue'\nimport App from './App'\n\nimport validation from './validation'\n/* eslint-disable no-new */\nnew Vue({\n  el: 'body',\n  components: { App }\n})\n"]}
