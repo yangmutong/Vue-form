@@ -135,7 +135,7 @@
   <div id="combine">
     <validator name="inputValidation">
       <form novalidate>
-        <input-component v-for="model in models" :data="model">
+        <input-component v-for="model in models" :form="model.form" :validation="model.validation">
 
         </input-component>
       </form>
@@ -151,13 +151,13 @@
   <script src="lib/vue-validator.js"></script>
   <script src="lib/vue-animated-list.js"></script>
   <script src="lib/vue-element.js"></script>
-  <script type="text/template" id="tpl">
+  <script type="text/x-tpml" id="tpl">
     <fieldset class="form-group">
-      <label :for="model.id" class="col-md-1 control-label">{{model.title}}</label>
+      <label :for="form.id" class="col-md-1 control-label">{{form.title}}</label>
       <div class="col-md-4">
-        <input class="form-control" :type="model.type" :name="model.name" :id="model.id" v-model="model.value">
+        <input class="form-control" :type="form.type" :name="form.name" :id="form.id" v-model="form.value">
       </div>
-      <span>text input {{model.value}}</span>
+      <span>text input {{form.value}}</span>
     </fieldset>
   </script>
 　<script>
@@ -176,7 +176,12 @@
 
     //for component
     var inputComponent = Vue.extend({
-      props:['data'],
+      props: {
+        form: {
+          type: Object,
+          required: true
+        }
+      },
       template:"#tpl"
     });
 
@@ -187,18 +192,28 @@
       data:{
         models:[
           {
-            id: "test-1",
-            title: "test-1",
-            type: "text",
-            name: "text",
-            value: "test-1"
+            form: {
+              id: "test-1",
+              title: "test-1",
+              type: "text",
+              name: "text",
+              value: "test-1"
+            },
+            validation:{
+
+            }
           },
           {
-            id: "test-2",
-            title: "test-2",
-            type: "number",
-            name: "number",
-            value: "test-2"
+            form:{
+              id: "test-2",
+              title: "test-2",
+              type: "number",
+              name: "number",
+              value: "test-2"
+            },
+            validation:{
+
+            }
           }
         ]
       }
