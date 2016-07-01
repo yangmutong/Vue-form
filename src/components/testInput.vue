@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  import resource from 'vue-resource'
+
   export default{
     data () {
       return {
