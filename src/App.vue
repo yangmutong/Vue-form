@@ -80,20 +80,23 @@ export default {
         },
         {
           type: "box-component",
-          form: [
-            {
-              id: "john",
-              type: "checkbox",
-              name: "john",
-              value: "John"
-            },
-            {
-              id: "mike",
-              type: "checkbox",
-              name: "mike",
-              value: "Mike"
-            }
-          ],
+          form: {
+            forms:[
+              {
+                id: "john",
+                type: "checkbox",
+                name: "john",
+                value: "John"
+              },
+              {
+                id: "mike",
+                type: "checkbox",
+                name: "mike",
+                value: "Mike"
+              }
+            ],
+            value:''
+          },
           validation:{
             name: "box",
             field:"box",

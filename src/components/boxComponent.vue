@@ -1,9 +1,9 @@
 <template>
   <fieldset class="form-group">
     <validator :name="validation.name">
-      <label v-for="f in form" class="checkbox-inline radiobox-inline" :for="f.id">
-        <input :type="f.type" :name="f.name" :field="validation.field" :id="f.id" :value="f.value" v-model="value" v-validate="validation.validate">
-        {{f.value}}
+      <label v-for="f in form.forms" class="checkbox-inline radiobox-inline" :for="f.id">
+        <input :type="f.type" :name="f.name" :field="validation.field" :id="f.id" value="f.value" v-model="f.value" v-validate="validation.validate">
+        {{f.name}}
       </label>
       <div class="errors">
         <div v-if="getValidation().valid">合法</div>
@@ -28,7 +28,7 @@
     },
     props: {
       form: {
-        type: Array,
+        type: Object,
         required: true
       },
       validation: {
