@@ -262,7 +262,10 @@
             validation:{
               name: "testValidation",
               field:"test-validate",
-              validate: { required: true, maxlength: 16}
+              validate:{
+                required: { rule: true, message: 'Filed required!!' },
+                maxlength: { rule: 8, message: 'too long char'}
+              }
             }
           }
 //          {

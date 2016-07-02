@@ -1,15 +1,12 @@
 <template>
   <div id="app">
-    <validator name="inputValidation" >
       <form novalidate @submit.prevent>
         <div v-for="model in models">
           <component :is="model.type" :form="model.form" :validation="model.validation">
 
           </component>
         </div>
-        <pre>{{$inputValidation | json}}</pre>
       </form>
-    </validator>
   </div>
 </template>
 
@@ -30,10 +27,13 @@ export default {
             name: "text",
             value: "test-1"
           },
-          validation:{
+          validation: {
             name: "test-1",
-            field:"test-1",
-            validate: { required: true, maxlength: 16}
+            field: "test-1",
+            validate: {
+              required: {rule: true, message: 'Filed required!!'},
+              maxlength: {rule: 8, message: 'too long char'}
+            }
           }
         },
         {
