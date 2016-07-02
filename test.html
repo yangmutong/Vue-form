@@ -170,6 +170,10 @@
         <span>text input {{form.value}}</span>
 
         <pre>{{ getValidation() | json }}</pre>
+        <div v-if="getValidation().valid">合法</div>
+        <div v-if="getValidation().invalid">非法</div>
+        <span v-if="getValidation()['this.validation.name'].required">{{ getValidation()['this.validation.name'].required }}</span>
+        <span v-if="getValidation()['this.validation.name'].minlength">{{ getValidation()['this.validation.name'].minlength }}</span>
       </validator>
     </fieldset>
   </script>

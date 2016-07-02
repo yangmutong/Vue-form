@@ -7,6 +7,10 @@
       <br>
       <span>Selected: {{ form.value | json }}</span>
       <pre>{{ getValidation() | json }}</pre>
+      <div class="errors">
+        <div v-if="getValidation().valid">合法</div>
+        <div v-if="getValidation().invalid">非法</div>
+      </div>
     </validator>
 
   </fieldset>
