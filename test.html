@@ -136,7 +136,6 @@
   </div>
 
   <div id="combine">
-    <validator lazy name="inputValidation">
       <form novalidate @submit.prevent>
         <div v-for="model in models">
           <component :is="model.type" :form="model.form" :validation="model.validation">
@@ -149,7 +148,6 @@
         <!--</input-component>-->
         <pre>{{$inputValidation | json}}</pre>
       </form>
-    </validator>
   </div>
   <!-- built files will be auto injected -->
 
@@ -163,12 +161,16 @@
   <script src="lib/vue-element.js"></script>
 
   <script type="text/x-tpml" id="input">
-    <fieldset class="form-group">
-      <label v-if="form.type != 'submit'" :for="form.id" class="col-md-1 control-label">{{form.title}}</label>
-      <div class="col-md-4">
-        <input class="form-control" :type="form.type" :name="form.name" :field="form.field" :id="form.id" v-model="form.value" v-validate="form.validate">
-      </div>
-      <span>text input {{form.value}}</span>
+    <fieldset class="form-group" :id="validation.name">
+      <validator :name="validation.name">
+        <label v-if="form.type != 'submit'" :for="form.id" class="col-md-1 control-label">{{form.title}}</label>
+        <div class="col-md-4">
+          <input v-on:input="onChange" class="form-control" :type="form.type" :name="form.name" :field="validation.field" :id="form.id" v-model="form.value" v-validate="validation.validate">
+        </div>
+        <span>text input {{form.value}}</span>
+
+        <pre>{{ getValidation() | json }}</pre>
+      </validator>
     </fieldset>
   </script>
 　
@@ -182,25 +184,25 @@
     </fieldset>
   </script>
   <script>
-    var app = new Vue({
-      el: "#app",
-      data:{
-        picked: '',
-        checkedNames: [],
-        text:'',
-        area:'',
-        date:'',
-        selected:'',
-        mulSelected:[],
-        field:{
-          id: 'username',
-          label: 'username',
-          name: 'username',
-          placeholder: 'input your username',
-          validate: { required: true, maxlength: 16 }
-        }
-      }
-    });
+//    var app = new Vue({
+//      el: "#app",
+//      data:{
+//        picked: '',
+//        checkedNames: [],
+//        text:'',
+//        area:'',
+//        date:'',
+//        selected:'',
+//        mulSelected:[],
+//        field:{
+//          id: 'username',
+//          label: 'username',
+//          name: 'username',
+//          placeholder: 'input your username',
+//          validate: { required: true, maxlength: 16 }
+//        }
+//      }
+//    });
 
     //for component
     var inputComponent = Vue.extend({
@@ -214,7 +216,15 @@
           required: true
         }
       },
-      template:"#input"
+      template:"#input",
+      methods: {
+        onChange: function(){
+          console.log(this);
+        },
+        getValidation: function(){
+          return this[this.$options._validator];
+        }
+      }
     });
 
 
@@ -247,88 +257,81 @@
               title: "test-1",
               type: "text",
               name: "text",
-              value: "test-1",
-              field:"test-1",
-              validate: { required: true, maxlength: 16 }
+              value: "test-1"
             },
             validation:{
-              required: {
-                value: true,
-                message: "This field is required!"
-              },
-              maxlength: {
-                value:6,
-                message: "6 char at most!"
-              }
-            }
-          },
-          {
-            type: "input-component",
-            form:{
-              id: "test-2",
-              title: "test-2",
-              type: "number",
-              name: "number",
-              value: "test-2",
-              field:"test-2"
-            },
-            validation:{
-              required: {
-                value: true,
-                message: "This field is required!"
-              },
-              maxlength: {
-                value:6,
-                message: "6 char at most!"
-              }
-            }
-          },
-          {
-            type: "select-component",
-            form: {
-              id: "test-3",
-              title: "selected",
-              multiple: false,
-              options: [
-                {value: "mike", text: "Mike"},
-                {value: "john", text: "John"},
-                {value: "jenny", text: "Jenny"}
-              ]
-            },
-            validation: {
-
-            }
-          },
-          {
-            type: "select-component",
-            form: {
-              id: "test-4",
-              title: "selected",
-              multiple: true,
-              options: [
-                {value: "mike", text: "Mike"},
-                {value: "john", text: "John"},
-                {value: "jenny", text: "Jenny"}
-              ]
-            },
-            validation: {
-
-            }
-          },
-          {
-            type: "input-component",
-            form: {
-              id: "submit",
-              title: "submit",
-              type: "date",
-              name: "submit",
-              value: "submit",
-              field:"submit"
-            },
-            validation: {
-
+              name: "testValidation",
+              field:"test-validate",
+              validate: { required: true, maxlength: 16}
             }
           }
+//          {
+//            type: "input-component",
+//            form:{
+//              id: "test-2",
+//              title: "test-2",
+//              type: "number",
+//              name: "number",
+//              value: "test-2",
+//              field:"test-2"
+//            },
+//            validation:{
+//              required: {
+//                value: true,
+//                message: "This field is required!"
+//              },
+//              maxlength: {
+//                value:6,
+//                message: "6 char at most!"
+//              }
+//            }
+//          },
+//          {
+//            type: "select-component",
+//            form: {
+//              id: "test-3",
+//              title: "selected",
+//              multiple: false,
+//              options: [
+//                {value: "mike", text: "Mike"},
+//                {value: "john", text: "John"},
+//                {value: "jenny", text: "Jenny"}
+//              ]
+//            },
+//            validation: {
+//
+//            }
+//          },
+//          {
+//            type: "select-component",
+//            form: {
+//              id: "test-4",
+//              title: "selected",
+//              multiple: true,
+//              options: [
+//                {value: "mike", text: "Mike"},
+//                {value: "john", text: "John"},
+//                {value: "jenny", text: "Jenny"}
+//              ]
+//            },
+//            validation: {
+//
+//            }
+//          },
+//          {
+//            type: "input-component",
+//            form: {
+//              id: "submit",
+//              title: "submit",
+//              type: "date",
+//              name: "submit",
+//              value: "submit",
+//              field:"submit"
+//            },
+//            validation: {
+//
+//            }
+//          }
         ]
       }
     });

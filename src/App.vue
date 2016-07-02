@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <validator name="inputValidation">
+    <validator name="inputValidation" >
       <form novalidate @submit.prevent>
         <div v-for="model in models">
           <component :is="model.type" :form="model.form" :validation="model.validation">
@@ -28,19 +28,12 @@ export default {
             title: "test-1",
             type: "text",
             name: "text",
-            value: "test-1",
-            field: "test-1",
-            validate: { required: true, maxlength: 16 }
+            value: "test-1"
           },
           validation:{
-            required: {
-              value: true,
-              message: "This field is required!"
-            },
-            maxlength: {
-              value:6,
-              message: "6 char at most!"
-            }
+            name: "test-1",
+            field:"test-1",
+            validate: { required: true, maxlength: 16}
           }
         },
         {
@@ -50,18 +43,12 @@ export default {
             title: "test-2",
             type: "number",
             name: "number",
-            value: "test-2",
-            field: "test-2"
+            value: "test-2"
           },
           validation:{
-            required: {
-              value: true,
-              message: "This field is required!"
-            },
-            maxlength: {
-              value:6,
-              message: "6 char at most!"
-            }
+            name: "test-2",
+            field:"test-2",
+            validate: { required: true, maxlength: 16}
           }
         },
         {
@@ -76,8 +63,10 @@ export default {
               {value: "jenny", text: "Jenny"}
             ]
           },
-          validation: {
-
+          validation:{
+            name: "test-3",
+            field:"test-3",
+            validate: { required: true}
           }
         },
         {
@@ -92,8 +81,10 @@ export default {
               {value: "jenny", text: "Jenny"}
             ]
           },
-          validation: {
-
+          validation:{
+            name: "test-4",
+            field:"test-4",
+            validate: { required: true}
           }
         },
         {
@@ -103,21 +94,16 @@ export default {
             title: "submit",
             type: "submit",
             name: "submit",
-            value: "submit",
-            field: "submit"
+            value: "submit"
           },
-          validation: {
-
+          validation:{
+            name: "submit",
+            field:"submit",
+            validate: { required: true, maxlength: 16}
           }
         }
       ]
     }
-  },
-  created () {
-    console.log(this)
-  },
-  compiled () {
-    console.log(this)
   },
   components: {
     inputComponent,

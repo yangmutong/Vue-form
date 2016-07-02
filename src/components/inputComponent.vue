@@ -1,17 +1,20 @@
 <template>
   <fieldset class="form-group">
-    <label v-if="form.type != 'submit'" :for="form.id" class="col-md-1 control-label">{{form.title}}</label>
-    <div class="col-md-4">
-      <input class="form-control" :type="form.type" :name="form.name" :field="form.field" :id="form.id" v-model="form.value">
-    </div>
-    <span>text input {{form.value}}</span>
+    <validator :name="validation.name">
+      <label v-if="form.type != 'submit'" :for="form.id" class="col-md-1 control-label">{{form.title}}</label>
+      <div class="col-md-4">
+        <input v-on:input="onChange" class="form-control" :type="form.type" :name="form.name" :field="validation.field" :id="form.id" v-model="form.value" v-validate="validation.validate">
+      </div>
+      <span>text input {{form.value}}</span>
+      <pre>{{ getValidation() | json }}</pre>
+    </validator>
   </fieldset>
 </template>
 
 <script>
   export default{
     data () {
-      console.log("there is select")
+      console.log("there is input")
       return {
 
       }
@@ -24,6 +27,14 @@
       validation: {
         type: Object,
         required: true
+      }
+    },
+    methods: {
+      onChange () {
+        console.log(this)
+      },
+      getValidation () {
+        return this[this.$options._validator]
       }
     }
   }
