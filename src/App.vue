@@ -116,6 +116,9 @@ export default {
   created () {
     console.log(this)
   },
+  compiled () {
+    console.log(this)
+  },
   components: {
     inputComponent,
     selectComponent
