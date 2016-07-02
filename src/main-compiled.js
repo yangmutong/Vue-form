@@ -25,6 +25,10 @@ _vue2.default.use(_vueValidator2.default);
 /* eslint-disable no-new */
 new _vue2.default({
   el: 'body',
+  created: function created() {
+    console.log(this.$data);
+  },
+
   components: { App: _App2.default }
 });
 

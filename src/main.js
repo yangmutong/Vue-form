@@ -11,5 +11,8 @@ Vue.use(VueValidation)
 /* eslint-disable no-new */
 new Vue({
   el: 'body',
+  created () {
+    console.log(this.$data);
+  },
   components: { App }
 })
