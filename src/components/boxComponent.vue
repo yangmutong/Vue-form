@@ -1,11 +1,10 @@
 <template>
-  <fieldset class="form-group" >
+  <fieldset class="form-group">
     <validator :name="validation.name">
-      <select :name="form.name" class="form-control" v-model="value" :multiple="form.multiple" :field="validation.field" :id="form.id" v-validate="validation.validate">
-        <option v-for="option in form.options" :value="option.value">{{option.text}}</option>
-      </select>
-      <br>
-      <span>Selected: {{ form.value | json }}</span>
+      <label v-for="f in form" class="checkbox-inline radiobox-inline" :for="f.id">
+        <input :type="f.type" :name="f.name" :field="validation.field" :id="f.id" :value="f.value" v-model="value" v-validate="validation.validate">
+        {{f.value}}
+      </label>
       <div class="errors">
         <div v-if="getValidation().valid">合法</div>
         <div v-if="getValidation().invalid">非法
@@ -15,23 +14,21 @@
         </div>
       </div>
     </validator>
-
   </fieldset>
   <hr>
 </template>
-<style>
 
-</style>
 <script>
   export default{
     data () {
+      console.log("there is box")
       return {
 
       }
     },
     props: {
       form: {
-        type: Object,
+        type: Array,
         required: true
       },
       validation: {
@@ -55,3 +52,7 @@
     }
   }
 </script>
+
+<style scoped>
+
+</style>

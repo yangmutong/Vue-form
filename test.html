@@ -64,36 +64,36 @@
         <!--</fieldset>-->
 
 
-        <!--&lt;!&ndash;多选框选项&ndash;&gt;-->
-        <!--<fieldset class="form-group">-->
-          <!--<label class="checkbox-inline" for="jack">-->
-            <!--<input type="checkbox" id="jack" value="jack" v-model="checkedNames"> Jack-->
-          <!--</label>-->
-          <!--<label class="checkbox-inline" for="john">-->
-            <!--<input type="checkbox" id="john" value="John" v-model="checkedNames"> John-->
-          <!--</label>-->
-          <!--<label class="checkbox-inline" for="mike">-->
-            <!--<input type="checkbox" id="mike" value="Mike" v-model="checkedNames"> Mike-->
-          <!--</label>-->
-          <!--<br>-->
-          <!--<span>Checked names: {{ checkedNames | json }}</span>-->
-        <!--</fieldset>-->
+        <!--多选框选项-->
+        <fieldset class="form-group">
+          <label class="checkbox-inline" for="jack">
+            <input type="checkbox" id="jack" value="jack" v-model="checkedNames"> Jack
+          </label>
+          <label class="checkbox-inline" for="john">
+            <input type="checkbox" id="john" value="John" v-model="checkedNames"> John
+          </label>
+          <label class="checkbox-inline" for="mike">
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames"> Mike
+          </label>
+          <br>
+          <span>Checked names: {{ checkedNames | json }}</span>
+        </fieldset>
 
 
-        <!--&lt;!&ndash;单选框按钮&ndash;&gt;-->
-        <!--<fieldset class="form-group">-->
-          <!--<label class="radio-inline" for="inlineRadio1">-->
-            <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" v-model="picked"> 1-->
-          <!--</label>-->
-          <!--<label class="radio-inline" for="inlineRadio2">-->
-            <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" v-model="picked"> 2-->
-          <!--</label>-->
-          <!--<label class="radio-inline" for="inlineRadio3">-->
-            <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" v-model="picked"> 3-->
-          <!--</label>-->
-          <!--<br>-->
-          <!--<span>Picked: {{ picked }}</span>-->
-        <!--</fieldset>-->
+        <!--单选框按钮-->
+        <fieldset class="form-group">
+          <label class="radio-inline" for="inlineRadio1">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" v-model="picked"> 1
+          </label>
+          <label class="radio-inline" for="inlineRadio2">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" v-model="picked"> 2
+          </label>
+          <label class="radio-inline" for="inlineRadio3">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" v-model="picked"> 3
+          </label>
+          <br>
+          <span>Picked: {{ picked }}</span>
+        </fieldset>
 
         <!--<fieldset class="form-group">-->
           <!--<label for="area">-->
@@ -142,11 +142,6 @@
 
           </component>
         </div>
-
-        <!--<input-component v-for="model in models" :form="model.form" :validation="model.validation">-->
-
-        <!--</input-component>-->
-        <pre>{{$inputValidation | json}}</pre>
       </form>
   </div>
   <!-- built files will be auto injected -->
@@ -172,8 +167,10 @@
         <pre>{{ getValidation() | json }}</pre>
         <div v-if="getValidation().valid">合法</div>
         <div v-if="getValidation().invalid">非法</div>
-        <span v-if="getValidation()['this.validation.name'].required">{{ getValidation()['this.validation.name'].required }}</span>
-        <span v-if="getValidation()['this.validation.name'].minlength">{{ getValidation()['this.validation.name'].minlength }}</span>
+        <div v-for="(key, val) in validation.validate">
+          <span v-if="getErrorMessage()[key]">{{getErrorMessage()[key]}}</span>
+        </div>
+
       </validator>
     </fieldset>
   </script>
@@ -227,6 +224,9 @@
         },
         getValidation: function(){
           return this[this.$options._validator];
+        },
+        getErrorMessage: function(){
+          return this.getValidation()[this.validation.field];
         }
       }
     });
@@ -265,7 +265,7 @@
             },
             validation:{
               name: "testValidation",
-              field:"test-validate",
+              field:"testValidate",
               validate:{
                 required: { rule: true, message: 'Filed required!!' },
                 maxlength: { rule: 8, message: 'too long char'}
